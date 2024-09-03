@@ -157,6 +157,279 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/03/%E5%9F%BA%E7%A1%80%E8%B0%83%E8%AF%95%E5%BC%80%E5%8F%91%E6%9D%BF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="595">
+      <meta itemprop="description" content="莫听穿林打叶声，何妨吟啸且徐行">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LWL">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/09/03/%E5%9F%BA%E7%A1%80%E8%B0%83%E8%AF%95%E5%BC%80%E5%8F%91%E6%9D%BF/" class="post-title-link" itemprop="url">基础调试开发板</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-09-03 15:00:43" itemprop="dateCreated datePublished" datetime="2024-09-03T15:00:43+08:00">2024-09-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%A5%BD%E5%A5%BD%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">好好学习</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h1><hr>
+<p>利用STM32F103C8T6构建一个简单的控制平台，按键控制电源通断、LED指示灯用于简单调试、OLED屏幕用于打印相关信息方便后续调试</p>
+<hr>
+<h1 id="器件清单"><a href="#器件清单" class="headerlink" title="器件清单"></a>器件清单</h1><ul>
+<li>控制器：STM32F103C8T6</li>
+<li>屏幕：OLED屏</li>
+<li>晶振：8M外置晶振</li>
+<li>电池：7.4V锂电池</li>
+<li>降压芯片：ASM1117-5.0和ASM1117-3.3</li>
+<li>电源开关：5.8mm*5.8m 6P自锁开关</li>
+<li>LED、电容、电阻、插针若干(LED、电容、电阻均选取0603封装，是个失误，太小了，不便于手动焊接，建议0805封装)</br></br><table>
+<thead>
+<tr>
+<th align="center">封装</th>
+<th align="center">尺寸</th>
+<th align="center">功率</th>
+<th align="center">电阻耐压值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">0402</td>
+<td align="center">1.0mm*0.5mm</td>
+<td align="center">1&#x2F;16W</td>
+<td align="center">50</td>
+</tr>
+<tr>
+<td align="center">0603</td>
+<td align="center">1.6mm*0.8mm</td>
+<td align="center">1&#x2F;10W</td>
+<td align="center">50</td>
+</tr>
+<tr>
+<td align="center">0805</td>
+<td align="center">2.0mm*1.2mm</td>
+<td align="center">1&#x2F;8W</td>
+<td align="center">150</td>
+</tr>
+<tr>
+<td align="center">1206</td>
+<td align="center">3.2mm*1.6mm</td>
+<td align="center">1&#x2F;4W</td>
+<td align="center">200</td>
+</tr>
+<tr>
+<td align="center">1210</td>
+<td align="center">3.2mm*2.5mm</td>
+<td align="center">1&#x2F;3W</td>
+<td align="center">200</td>
+</tr>
+<tr>
+<td align="center">1812</td>
+<td align="center">4.5mm*3.2mm</td>
+<td align="center">1&#x2F;2W</td>
+<td align="center">200</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<hr>
+<h1 id="电路模块"><a href="#电路模块" class="headerlink" title="电路模块"></a>电路模块</h1><hr>
+<h2 id="1、供电管理"><a href="#1、供电管理" class="headerlink" title="1、供电管理"></a>1、供电管理</h2><ul>
+<li>2P插座接7.4V锂电池，通过ASM1117-5.0和ASM1117-3.3分别稳压到5.0V和3.3V。两个稳压模块输入前连接自锁开关，输出接LED串联4.7k电阻，显示是否正常输出</li>
+<li>核心供电和OLED屏供电：3.3V</li>
+<li>外设供电：5V&#x2F;3.3V。安装3P插针，用跳线帽进行电源切换</li>
+</ul>
+<h2 id="2、时钟输入"><a href="#2、时钟输入" class="headerlink" title="2、时钟输入"></a>2、时钟输入</h2><ul>
+<li>8M晶振，并联2个20pf电容</li>
+</ul>
+<h2 id="3、复位电路及BOOT设置"><a href="#3、复位电路及BOOT设置" class="headerlink" title="3、复位电路及BOOT设置"></a>3、复位电路及BOOT设置</h2><ul>
+<li>暂时没有手动复位需求，直接使用10k电阻上拉3.3V输入，接到NRST上，同时电阻到地串联10nf电容滤波</li>
+<li>使用主闪存存储器，直接将BOOT0引脚过10K电阻接地即可</li>
+</ul>
+<h2 id="4、调试接口"><a href="#4、调试接口" class="headerlink" title="4、调试接口"></a>4、调试接口</h2><ul>
+<li>一个4P插针，用于外接STLINK</li>
+</ul>
+<h2 id="5、OLED屏"><a href="#5、OLED屏" class="headerlink" title="5、OLED屏"></a>5、OLED屏</h2><ul>
+<li>I2C通信，除VCC和GND外，SCL和SDA分别接PB6和PB7</li>
+<li>输入前串联自锁开关，控制供电。</li>
+<li>电源输入并联LED和4.7K电阻，用于显示是否供电</li>
+</ul>
+<h2 id="6、简易LED调试"><a href="#6、简易LED调试" class="headerlink" title="6、简易LED调试"></a>6、简易LED调试</h2><ul>
+<li>8个LED串联1K电阻上拉3.3V输入</li>
+<li>LED分别连接PA8<del>PA12，PB13</del>PB15</li>
+</ul>
+<h2 id="7、外设调试接口"><a href="#7、外设调试接口" class="headerlink" title="7、外设调试接口"></a>7、外设调试接口</h2><ul>
+<li>使用两个3*12P的插针，最上面为信号线，重点为GND，最下面为VCC</li>
+<li>PB6<del>PB9,PA8</del>PA12,PB13~PB15作为一组引出</li>
+<li>PB10<del>PB11,PB1</del>PB0,PA7~PA0作为一组引出</li>
+</ul>
+<h2 id="8、供电切换"><a href="#8、供电切换" class="headerlink" title="8、供电切换"></a>8、供电切换</h2><ul>
+<li>为了满足可能的外设供电需求，利用3P插针，可通过将跳线帽插在不同的位置切换外设供电电压。(电路连接为：5.0V&#x2F;VCC&#x2F;3.3V)</li>
+</ul>
+<hr>
+<h1 id="必要记录："><a href="#必要记录：" class="headerlink" title="必要记录："></a>必要记录：</h1><ul>
+<li><p><strong>在STM32F10XXX里，可以通过BOOT[1:0]引脚选择三种不同的启动模式，启动方式如下表所示：</strong></p>
+<table>
+  <tr align="center">
+      <th colspan="2">启动模式选择引脚</th> 
+      <th rowspan="2">启动模式</th>
+      <th rowspan="2">说明</th>
+  </tr>
+  <tr>
+      <th>BOOT1</th>  
+      <th>BOOT0</th>  
+  </tr>
+  <tr align="center">
+      <td>X</td> 
+      <td>0</td> 
+      <td>主闪存存储器</td> 
+      <td>主闪存存储器被选为启动区域</td>
+  </tr>
+  <tr align="center">
+      <td>0</td> 
+      <td>1</td> 
+      <td>系统存储器</td> 
+      <td>系统存储器被选为启动区域</td>
+  </tr>
+  <tr align="center">
+      <td>1</td> 
+      <td>1</td> 
+      <td>内置SRAM</td> 
+      <td>内置SRAM被选为启动区域</td>
+  </tr>
+</table>
+</li>
+<li><p><strong>晶振要尽可能离MCU近，尽可能避免干扰</strong></p>
+</li>
+<li><p><strong>MCU供电一般要在每对电源输入引脚加两个滤波电容，用于去耦，两滤波电容容值分别为10nf和100nf</strong></p>
+</li>
+<li><p><strong>应该安装几个轻触开关，用于外部输入，不然无法手动给条件进行软件测试</strong></p>
+</li>
+<li><p><strong>供电和地线可以在PCB画图时设置为30mil，保证在可能的大负载下供电稳定</strong></p>
+</li>
+<li><p><strong>PCB画板时，如果没有包装，电路板记得四周倒角。记得打孔预留固定孔位，方便后续组装</strong></p>
+</li>
+<li><p><strong>在选用MOS管搭建防反接电路时，一定要确认PMOS和NMOS的DSG三极是否正确</strong></p>
+</li>
+<li><p><strong>选用自锁开关作为电路电源输入管理时，一定要提前测清楚要用的开关的引脚是如何连接的，然后再设计对应的电路图</strong></p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/03/%E4%B8%80%E6%AC%A1%E9%AA%91%E8%A1%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="595">
+      <meta itemprop="description" content="莫听穿林打叶声，何妨吟啸且徐行">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LWL">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/09/03/%E4%B8%80%E6%AC%A1%E9%AA%91%E8%A1%8C/" class="post-title-link" itemprop="url">一次骑行</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-09-03 14:53:05" itemprop="dateCreated datePublished" datetime="2024-09-03T14:53:05+08:00">2024-09-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9A%8F%E4%BE%BF%E5%86%99%E5%86%99/" itemprop="url" rel="index"><span itemprop="name">随便写写</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>&emsp;&emsp;披着浓厚的夜色出发，被黑夜紧紧的包裹，微弱灯光照亮扬起尘土的公路，被“王者”反复碾压，像是喘不上气；身后远离的人儿，有的在峡谷中的战斗欢声笑语；有的在空调吹拂下躺在床上刷着手机；有的互相拥抱耳边呢喃……想想朋友圈，有的韩服上了王者；有的在青春的年纪，已经去过绝大多数人一辈子都不曾到达的地方；有的欣赏身边的美景，体会着经常被人忽视的温柔细腻……<br>​<br></br>&emsp;&emsp;前方叔叔的尾灯已经若隐若现，我这细胳膊细腿缺失的力量，化作实实在在的尺，丈量着我与叔叔之间的差距。身旁不时有“王者”呼啸而过，带起的灰尘时而混合着青草的芬芳，时而混进来一丝牛粪的“芳香”，一股脑涌入肺中，强调着我远离市区的这个事实。叔叔轻松将我“拉爆”，但是我却没有一丝的焦急，这种安心是多么的宝贵，因为我知道，无论相隔多远，他终将在某个地方等待着我，与我一起休息。这种安心就像从爸爸嘴里听到“你尽力就好，实在不行回来我和你妈还是能让你吃饱饭的。”这种婴儿与母亲脐带一般的纽带，牢牢将我的心拴在这个实实在在的世界里，不飘向无边无际的虚空。每个人终究只能困在自己的躯壳中，看着瞳孔透出那一丝丝的光，听着鼓膜震动传来的一点声音，在地球oline里，只能感受自己这一个主角与茫茫npc有限的一点交流。<br><br></br>&emsp;&emsp;大腿持续涌上的酸软，一直引诱着我停下，看着旁边风驰电掣的电动车，只需要拧一拧油门就能爬上令我累到绝望的缓坡，那种发自心底里渴望是那么的明确。全程48公里，一个全马差不多，如果我实打实跑一次，会对我现在骑着的自行车该有多么渴望啊。是啊，那我骑上了电动车是不是又要开始羡慕汽车了，坐上汽车又会感叹火车有多么快，在火车上看着山区弯弯绕绕就会期望飞起来直达。这种渴望是没有上限的，我会永远渴望更快，更远的。但是倘若地球不是圆的，到我终于疲于这种追求快和远的时候，那些一开始就领先我的人，他们丢下我多远了呢，而那些比我跑得慢的，又被我丢在了哪里？我的身边，可触及的又是谁呢？<br>​<br></br>&emsp;&emsp;昨晚今晚一来一回，伴随着腿上真实可感的酸痛还有屁股的胀痛，靠着半夜容易袭来的多愁善感，编辑一些真实从我脑中闪过的想法，当然，也可以任其逝去，不过既然肉体的逝去已经是必然，那么这些消耗了能量产生的意识，便多了一份保留的理由。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/03/%E6%B8%94%E7%BF%81/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -977,7 +1250,7 @@ _斜体2_
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -990,7 +1263,7 @@ _斜体2_
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
