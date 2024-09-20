@@ -171,7 +171,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2024/09/20/FOC%E5%8E%9F%E7%90%86/" class="post-title-link" itemprop="url">FOC原理</a>
+            <a href="/2024/09/20/FOC%E5%8E%9F%E7%90%86/" class="post-title-link" itemprop="url">FOC原理0x01</a>
         </h2>
 
         <div class="post-meta">
@@ -182,7 +182,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2024-09-20 15:20:44 / 修改时间：15:22:48" itemprop="dateCreated datePublished" datetime="2024-09-20T15:20:44+08:00">2024-09-20</time>
+              <time title="创建时间：2024-09-20 15:20:44 / 修改时间：17:28:38" itemprop="dateCreated datePublished" datetime="2024-09-20T15:20:44+08:00">2024-09-20</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -205,7 +205,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><img src="/pic/1.jpg" alt="img"></p>
+          <h1 id="0x00-前置知识"><a href="#0x00-前置知识" class="headerlink" title="0x00 前置知识"></a>0x00 前置知识</h1><ol>
+<li><strong>什么是PWM？</strong><br>&emsp;&emsp;答：PWM是脉冲宽度调制（Pulse Width Modulation）的缩写。PWM通过改变脉冲的宽度来控制输出信号的占空比，从而实现对模拟信号的控制。其本质就是占空比可调的方波。两个关键参数——__频率、占空比__。频率即1s内有多少个脉冲，占空比即每个脉冲内高电平的持续时间百分比。可以使用这种方式利用数字信号模拟出模拟信号。如下图所示。<img src="/pic/FOC%E5%8E%9F%E7%90%86/0.jpg" alt="img"></li>
+</ol>
+<h1 id="0x01、驱动结构"><a href="#0x01、驱动结构" class="headerlink" title="0x01、驱动结构"></a>0x01、驱动结构</h1><p>基本结构如下图所示：<br><img src="/pic/FOC%E5%8E%9F%E7%90%86/1.jpg" alt="img"></p>
+<h1 id="0x02、驱动原理"><a href="#0x02、驱动原理" class="headerlink" title="0x02、驱动原理"></a>0x02、驱动原理</h1><h2 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h2><p>星型连接的三组线圈通过6个mos管控制通断，当不同mos管导通时，产生不同的磁场，利用磁场控制中间的永磁体转子转动。不同的通断控制一共有6种组合，如下图所示。<img src="/pic/FOC%E5%8E%9F%E7%90%86/2.jpg" alt="img"><br>原理上只需要打开两个mos管导通两个线圈即可产生磁场使转子旋转，但是这种控制方式提供的扭矩不够大，于是同时导通三个线圈，最终合成磁场方向如上图种的转子指向V1~V6。</p>
+<h2 id="进阶问题"><a href="#进阶问题" class="headerlink" title="进阶问题"></a>进阶问题</h2><ol>
+<li>   <strong>如何能够让磁体转到任意位置，而不是V1~V6一共6个方向？</strong><br>&emsp;&emsp;答：假设磁体需要停留在V1和V2中间位置。考虑一种情况——导通对应MOS管使磁体先处于V1位置，此时调整磁场，使得合成磁场方向指向V2，此时转子会向V2方向旋转，待其旋转过中间位置后，再调整磁场指向V1，由于惯性，磁体会继续向V2方向减速旋转，减速至0后向V1方向开始加速旋转，再过中间位置后，再调整磁场指向V2……。根据前面的分析，理论上，磁体会在中间位置来回转动，但当磁场切换频率足够快时，便可以使磁体处于V1和V2的中间位置转速为0。故只需要在一定的时间周期内，保证两个磁场方向占比为50%时，便等效为一个指向中间的磁场。如下图所示。<img src="/pic/FOC%E5%8E%9F%E7%90%86/3.jpg" alt="img"><br>&emsp;&emsp;同理，通过调整一个时间周期内两个方向磁场所占据的比例，就可以合成出新的方向的固定磁场，如下图所示。<img src="/pic/FOC%E5%8E%9F%E7%90%86/4.jpg" alt="img"></li>
+<li>   <strong>MOS管只能控制通断，线圈内电流大小固定，如何控制磁场强度？</strong><br>&emsp;&emsp;答：线圈中产生磁场的前提是线圈中有电流流过，当只有上面或下面三个MOS管导通时，无电流，此时不产生磁场，规定其状态为V7。如下图所示。<img src="/pic/FOC%E5%8E%9F%E7%90%86/5.jpg" alt="img"><br>&emsp;&emsp;根据前面的分析，一定时间周期内不同方向磁场的占比可以改变最终合成磁场的方向，同理，当一定时间周期内磁场持续时间占比为0%时，磁场强度为0%，占比时间为100%时，磁场强度为100%。容易想到，在一定时间周期内加入V7状态，并等比例改变原有磁场持续时间，根据V7时间占比不同，可以获得不同的磁场强度。如下图所示。<img src="/pic/FOC%E5%8E%9F%E7%90%86/6.jpg" alt="img"></li>
+</ol>
 
       
     </div>
