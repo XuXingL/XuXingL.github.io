@@ -33,11 +33,16 @@
 <meta property="og:image" content="http://example.com/pic/%E6%9F%A0%E6%AA%ACFOC%E8%A7%A3%E6%9E%84/3.jpg">
 <meta property="og:image" content="http://example.com/pic/%E6%9F%A0%E6%AA%ACFOC%E8%A7%A3%E6%9E%84/4.jpg">
 <meta property="og:image" content="http://example.com/pic/%E6%9F%A0%E6%AA%ACFOC%E8%A7%A3%E6%9E%84/5.jpg">
+<meta property="og:image" content="http://example.com/pic/%E6%9F%A0%E6%AA%ACFOC%E8%A7%A3%E6%9E%84/5-1.jpg">
 <meta property="og:image" content="http://example.com/pic/%E6%9F%A0%E6%AA%ACFOC%E8%A7%A3%E6%9E%84/6.jpg">
 <meta property="og:image" content="http://example.com/pic/%E6%9F%A0%E6%AA%ACFOC%E8%A7%A3%E6%9E%84/7.jpg">
+<meta property="og:image" content="http://example.com/pic/%E6%9F%A0%E6%AA%ACFOC%E8%A7%A3%E6%9E%84/7-1.jpg">
+<meta property="og:image" content="http://example.com/pic/%E6%9F%A0%E6%AA%ACFOC%E8%A7%A3%E6%9E%84/7-2.jpg">
+<meta property="og:image" content="http://example.com/pic/%E6%9F%A0%E6%AA%ACFOC%E8%A7%A3%E6%9E%84/7-3.jpg">
 <meta property="og:image" content="http://example.com/pic/%E6%9F%A0%E6%AA%ACFOC%E8%A7%A3%E6%9E%84/8.jpg">
+<meta property="og:image" content="http://example.com/pic/%E6%9F%A0%E6%AA%ACFOC%E8%A7%A3%E6%9E%84/8-1.jpg">
 <meta property="article:published_time" content="2024-09-26T13:04:14.000Z">
-<meta property="article:modified_time" content="2024-09-27T10:33:57.585Z">
+<meta property="article:modified_time" content="2024-09-27T13:32:38.962Z">
 <meta property="article:author" content="595">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/pic/%E6%9F%A0%E6%AA%ACFOC%E8%A7%A3%E6%9E%84/0.jpg">
@@ -200,7 +205,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-09-27 18:33:57" itemprop="dateModified" datetime="2024-09-27T18:33:57+08:00">2024-09-27</time>
+                <time title="修改时间：2024-09-27 21:32:38" itemprop="dateModified" datetime="2024-09-27T21:32:38+08:00">2024-09-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -225,13 +230,14 @@
       
         <h1 id="0x00-电路原理图分析"><a href="#0x00-电路原理图分析" class="headerlink" title="0x00 电路原理图分析"></a>0x00 电路原理图分析</h1><p><img src="/pic/%E6%9F%A0%E6%AA%ACFOC%E8%A7%A3%E6%9E%84/0.jpg" alt="img"></p>
 <h2 id="1、电压采样"><a href="#1、电压采样" class="headerlink" title="1、电压采样"></a>1、电压采样</h2><p><img src="/pic/%E6%9F%A0%E6%AA%ACFOC%E8%A7%A3%E6%9E%84/1.jpg" alt="img">&emsp;&emsp;输入电压VM为外接DC12V供电，分压电阻为18k和1k，即AD采集到的电压值为x时，实际电压y&#x3D;x*19。主控连接VBUS_S的IO为PA0配置为ADC0的CH0。(确定嘛?)</p>
-<h2 id="2、温度采样"><a href="#2、温度采样" class="headerlink" title="2、温度采样"></a>2、温度采样</h2><p><img src="/pic/%E6%9F%A0%E6%AA%ACFOC%E8%A7%A3%E6%9E%84/2.jpg" alt="img">&emsp;&emsp;输入电压为3.3V，分压电阻为10k热敏电阻和3.3k电阻。热敏电阻型号为NCP18XH103F03RB，查阅数据手册得知其B值为3380。其中B值计算公式如下：<br>$ B &#x3D; \frac{(T_2 \times T_1)}{(T_2 - T_1)} \times \ln\left(\frac{R_2}{R_1}\right) $<br>&emsp;&emsp;其中$T_1$和$T_2$是两个不同的温度，$R_1$是温度$T_1$下的电阻值，$R_2$是温度$T_2$下的电阻值。主控连接M0_TEMP的IO为PB0配置为ADC1的CH2。(确定嘛?)</p>
+<h2 id="2、温度采样"><a href="#2、温度采样" class="headerlink" title="2、温度采样"></a>2、温度采样</h2><p><img src="/pic/%E6%9F%A0%E6%AA%ACFOC%E8%A7%A3%E6%9E%84/2.jpg" alt="img">&emsp;&emsp;输入电压为3.3V，分压电阻为10k热敏电阻和3.3k电阻。热敏电阻型号为NCP18XH103F03RB，查阅数据手册得知其B值为3380。其中B值计算公式如下：<br>$B &#x3D; \frac{(T_2 \times T_1)}{(T_2 - T_1)} \times \ln\left(\frac{R_2}{R_1}\right)$<br>&emsp;&emsp;其中$T_1$和$T_2$是两个不同的温度，$R_1$是温度$T_1$下的电阻值，$R_2$是温度$T_2$下的电阻值。主控连接M0_TEMP的IO为PB0配置为ADC1的CH2。(确定嘛?)</p>
 <h2 id="3、晶振电路"><a href="#3、晶振电路" class="headerlink" title="3、晶振电路"></a>3、晶振电路</h2><p><img src="/pic/%E6%9F%A0%E6%AA%ACFOC%E8%A7%A3%E6%9E%84/3.jpg" alt="img">&emsp;&emsp;无源8M晶振，外壳接地，两个引脚分别接OSCIN和OSCOUT。</p>
-<h2 id="4、主控电路"><a href="#4、主控电路" class="headerlink" title="4、主控电路"></a>4、主控电路</h2><p><img src="/pic/%E6%9F%A0%E6%AA%ACFOC%E8%A7%A3%E6%9E%84/4.jpg" alt="img">&emsp;&emsp;3.3V电源过100nf滤波电容后接入，该接地的接地。NRST接100nf到地，BOOT0接10k电阻到地。</p>
-<h2 id="5、电流采样"><a href="#5、电流采样" class="headerlink" title="5、电流采样"></a>5、电流采样</h2><p><img src="/pic/%E6%9F%A0%E6%AA%ACFOC%E8%A7%A3%E6%9E%84/5.jpg" alt="img">&emsp;&emsp;主要元件电流感应放大器使用的是TP181A1，</p>
-<h2 id="6、5V-3-3V"><a href="#6、5V-3-3V" class="headerlink" title="6、5V-3.3V"></a>6、5V-3.3V</h2><p><img src="/pic/%E6%9F%A0%E6%AA%ACFOC%E8%A7%A3%E6%9E%84/6.jpg" alt="img">&emsp;&emsp;</p>
-<h2 id="7、电机驱动"><a href="#7、电机驱动" class="headerlink" title="7、电机驱动"></a>7、电机驱动</h2><p><img src="/pic/%E6%9F%A0%E6%AA%ACFOC%E8%A7%A3%E6%9E%84/7.jpg" alt="img">&emsp;&emsp;</p>
-<h2 id="8、24V-5V"><a href="#8、24V-5V" class="headerlink" title="8、24V-5V"></a>8、24V-5V</h2><p><img src="/pic/%E6%9F%A0%E6%AA%ACFOC%E8%A7%A3%E6%9E%84/8.jpg" alt="img">&emsp;&emsp;</p>
+<h2 id="4、主控电路"><a href="#4、主控电路" class="headerlink" title="4、主控电路"></a>4、主控电路</h2><p><img src="/pic/%E6%9F%A0%E6%AA%ACFOC%E8%A7%A3%E6%9E%84/4.jpg" alt="img">&emsp;&emsp;主控芯片使用GD32C103TBU6，具体详情可以参考相应数据手册。需要注意的是3.3V电源过100nf滤波电容后接入，该接地的接地。NRST接100nf到地，BOOT0接10k电阻到地，设置从片上FLASH启动。</p>
+<h2 id="5、电流采样"><a href="#5、电流采样" class="headerlink" title="5、电流采样"></a>5、电流采样</h2><p><img src="/pic/%E6%9F%A0%E6%AA%ACFOC%E8%A7%A3%E6%9E%84/5.jpg" alt="img">&emsp;&emsp;主要元件电流感应放大器使用的是TP181A1，根据数据手册得知，其GAIN为50。输出电压$V_{OUT} &#x3D; \left(I_{LOAD}\timesR{SHUNT}\right)GAIN + V_{REF}$其内部电路原理图如下图所示。<img src="/pic/%E6%9F%A0%E6%AA%ACFOC%E8%A7%A3%E6%9E%84/5-1.jpg" alt="img">&emsp;&emsp;可以看到FOC电路原理图中，REF是3.3V通过两个1k电阻分压取得，可知其值为1.65V。两个TP181A1的输出分别接在主控的PA1和PA2上，分别采集B、C两路的电流值（因为三相电机定子的线圈为星形连接，通过基尔霍夫电流定律可以算出A路的电流大小，所以只需要采集两路电流即可）。两个TP181A1的输入IN+和IN-则是通过10mΩ的电阻分压电机驱动电路的PGND输出得到。</p>
+<h2 id="6、5V-3-3V"><a href="#6、5V-3-3V" class="headerlink" title="6、5V-3.3V"></a>6、5V-3.3V</h2><p><img src="/pic/%E6%9F%A0%E6%AA%ACFOC%E8%A7%A3%E6%9E%84/6.jpg" alt="img">&emsp;&emsp;利用线性稳压器5V转3.3V。输入输出端接滤波电容，EN可以直接接IN。</p>
+<h2 id="7、电机驱动"><a href="#7、电机驱动" class="headerlink" title="7、电机驱动"></a>7、电机驱动</h2><p><img src="/pic/%E6%9F%A0%E6%AA%ACFOC%E8%A7%A3%E6%9E%84/7.jpg" alt="img">&emsp;&emsp;AT8313是三路半桥集成驱动芯片，很多问题不需要自己考虑，比如低电压小电流的控制信号和高电压大电流的驱动信号如何隔离，三相电机的驱动电路如何设计，器件参数如何匹配等。芯片的外部电路可以参考数据手册搭建。示例如下图所示。<img src="/pic/%E6%9F%A0%E6%AA%ACFOC%E8%A7%A3%E6%9E%84/7-1.jpg" alt="img">&emsp;&emsp;可以看出，先前的PGND输出为BLDC的电流输出端，根据数据手册描述，AT8313包含三路半H桥驱动器，半H桥的下管MOSFET的S端为各自独立管脚（PGND1、PGND2、PGND3），这样就可接3个独立的检流电阻。如果使用检流电阻，请保证此3管脚(PGND1、PGND2、PGND3)的电压不超过±500mV。电流采样电路中，检流电阻为10mΩ，考虑电机的额定电流到不了50A，基本可以保证PGND电压不会超过±500mV。AT8313的其他管脚描述如下图所示。<img src="/pic/%E6%9F%A0%E6%AA%ACFOC%E8%A7%A3%E6%9E%84/7-2.jpg" alt="img"><img src="/pic/%E6%9F%A0%E6%AA%ACFOC%E8%A7%A3%E6%9E%84/7-3.jpg" alt="img">&emsp;&emsp;根据管脚描述，除了必要外围电路，控制部分将三个EN引脚拉高，使能半H桥，然后将三个IN引脚接主控芯片，主控芯片通过输出高低电位可以控制半H桥的逻辑输出。V3P3是AT8313的一个3.3V电压输出引脚，直接和NSLEEP和NRESET连接，保证芯片正常工作。OUT1<del>OUT3三个引脚接BLDC的三相线。IN1</del>IN3分别接主控芯片的PA8~PA10。VM输入通过两个100nf和一个100uf的电容并联滤波后送入。</p>
+<h2 id="8、24V-5V"><a href="#8、24V-5V" class="headerlink" title="8、24V-5V"></a>8、24V-5V</h2><p><img src="/pic/%E6%9F%A0%E6%AA%ACFOC%E8%A7%A3%E6%9E%84/8.jpg" alt="img">&emsp;&emsp;主要器件使用JW5026电源芯片，为DC-DC芯片。支持5V1A输出，数据手册指导外围电路如下所示。根据外围电路参数搭建即可。<img src="/pic/%E6%9F%A0%E6%AA%ACFOC%E8%A7%A3%E6%9E%84/8-1.jpg" alt="img"></p>
+<h2 id="9、剩余原理图"><a href="#9、剩余原理图" class="headerlink" title="9、剩余原理图"></a>9、剩余原理图</h2><p>&emsp;&emsp;剩余部分都是接口和灯等简单电路，主要作用是引出引脚接口，供连接调试。没有什么难点。</p>
 
     </div>
 
@@ -309,7 +315,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x00-%E7%94%B5%E8%B7%AF%E5%8E%9F%E7%90%86%E5%9B%BE%E5%88%86%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">0x00 电路原理图分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E7%94%B5%E5%8E%8B%E9%87%87%E6%A0%B7"><span class="nav-number">1.1.</span> <span class="nav-text">1、电压采样</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E6%B8%A9%E5%BA%A6%E9%87%87%E6%A0%B7"><span class="nav-number">1.2.</span> <span class="nav-text">2、温度采样</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81%E6%99%B6%E6%8C%AF%E7%94%B5%E8%B7%AF"><span class="nav-number">1.3.</span> <span class="nav-text">3、晶振电路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E3%80%81%E4%B8%BB%E6%8E%A7%E7%94%B5%E8%B7%AF"><span class="nav-number">1.4.</span> <span class="nav-text">4、主控电路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5%E3%80%81%E7%94%B5%E6%B5%81%E9%87%87%E6%A0%B7"><span class="nav-number">1.5.</span> <span class="nav-text">5、电流采样</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6%E3%80%815V-3-3V"><span class="nav-number">1.6.</span> <span class="nav-text">6、5V-3.3V</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7%E3%80%81%E7%94%B5%E6%9C%BA%E9%A9%B1%E5%8A%A8"><span class="nav-number">1.7.</span> <span class="nav-text">7、电机驱动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8%E3%80%8124V-5V"><span class="nav-number">1.8.</span> <span class="nav-text">8、24V-5V</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x00-%E7%94%B5%E8%B7%AF%E5%8E%9F%E7%90%86%E5%9B%BE%E5%88%86%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">0x00 电路原理图分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E7%94%B5%E5%8E%8B%E9%87%87%E6%A0%B7"><span class="nav-number">1.1.</span> <span class="nav-text">1、电压采样</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E6%B8%A9%E5%BA%A6%E9%87%87%E6%A0%B7"><span class="nav-number">1.2.</span> <span class="nav-text">2、温度采样</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81%E6%99%B6%E6%8C%AF%E7%94%B5%E8%B7%AF"><span class="nav-number">1.3.</span> <span class="nav-text">3、晶振电路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E3%80%81%E4%B8%BB%E6%8E%A7%E7%94%B5%E8%B7%AF"><span class="nav-number">1.4.</span> <span class="nav-text">4、主控电路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5%E3%80%81%E7%94%B5%E6%B5%81%E9%87%87%E6%A0%B7"><span class="nav-number">1.5.</span> <span class="nav-text">5、电流采样</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6%E3%80%815V-3-3V"><span class="nav-number">1.6.</span> <span class="nav-text">6、5V-3.3V</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7%E3%80%81%E7%94%B5%E6%9C%BA%E9%A9%B1%E5%8A%A8"><span class="nav-number">1.7.</span> <span class="nav-text">7、电机驱动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8%E3%80%8124V-5V"><span class="nav-number">1.8.</span> <span class="nav-text">8、24V-5V</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9%E3%80%81%E5%89%A9%E4%BD%99%E5%8E%9F%E7%90%86%E5%9B%BE"><span class="nav-number">1.9.</span> <span class="nav-text">9、剩余原理图</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
