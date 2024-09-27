@@ -28,7 +28,7 @@
 <meta property="og:description" content="目标 利用STM32F103C8T6构建一个简单的控制平台，按键控制电源通断、LED指示灯用于简单调试、OLED屏幕用于打印相关信息方便后续调试  器件清单 控制器：STM32F103C8T6 屏幕：OLED屏 晶振：8M外置晶振 电池：7.4V锂电池 降压芯片：ASM1117-5.0和ASM1117-3.3 电源开关：5.8mm*5.8m 6P自锁开关 LED、电容、电阻、插针若干(LED、电容">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-09-03T07:00:43.000Z">
-<meta property="article:modified_time" content="2024-09-03T07:00:43.692Z">
+<meta property="article:modified_time" content="2024-09-27T13:40:05.087Z">
 <meta property="article:author" content="595">
 <meta property="article:tag" content="嵌入式">
 <meta name="twitter:card" content="summary">
@@ -186,6 +186,13 @@
 
               <time title="创建时间：2024-09-03 15:00:43" itemprop="dateCreated datePublished" datetime="2024-09-03T15:00:43+08:00">2024-09-03</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-27 21:40:05" itemprop="dateModified" datetime="2024-09-27T21:40:05+08:00">2024-09-27</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -293,8 +300,8 @@
 </ul>
 <h2 id="7、外设调试接口"><a href="#7、外设调试接口" class="headerlink" title="7、外设调试接口"></a>7、外设调试接口</h2><ul>
 <li>使用两个3*12P的插针，最上面为信号线，重点为GND，最下面为VCC</li>
-<li>PB6<del>PB9,PA8</del>PA12,PB13~PB15作为一组引出</li>
-<li>PB10<del>PB11,PB1</del>PB0,PA7~PA0作为一组引出</li>
+<li>PB6\simPB9,PA8\simPA12,PB13\simPB15作为一组引出</li>
+<li>PB10\simPB11,PB1\simPB0,PA7\simPA0作为一组引出</li>
 </ul>
 <h2 id="8、供电切换"><a href="#8、供电切换" class="headerlink" title="8、供电切换"></a>8、供电切换</h2><ul>
 <li>为了满足可能的外设供电需求，利用3P插针，可通过将跳线帽插在不同的位置切换外设供电电压。(电路连接为：5.0V&#x2F;VCC&#x2F;3.3V)</li>
